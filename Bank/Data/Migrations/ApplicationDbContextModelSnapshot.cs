@@ -76,8 +76,6 @@ namespace Bank.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CardId");
-
                     b.ToTable("Transactions");
                 });
 
@@ -111,20 +109,6 @@ namespace Bank.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Library.Models.Transaction", b =>
-                {
-                    b.HasOne("Library.Models.Card", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Library.Models.Card", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }
