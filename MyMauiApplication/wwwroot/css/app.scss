@@ -1,0 +1,126 @@
+:root {
+    /*Colors>*/
+    /*dark*/
+    --dark-color: #1e1e1e;
+    --white-color: #fff;
+    --gray-color: #3F4248;
+    //--main-color:
+    /*main*/
+    --danger-color: #ED213A;
+    --success-color: #0b6623;
+    /*Linear gradient*/
+    --main-gradient: linear-gradient(to left, var(--main-color), var(--second-color));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@mixin btn-base {
+    padding: 10px 20px;
+    border: none;
+    color: var(--white-color);
+    background: var(--dark-color);
+    font-weight: bolder;
+    font-size: medium;
+    transition: all 1s;
+    outline: none;
+    position: relative;
+
+    &:hover {
+        opacity: 0.8
+    }
+
+    &:disabled {
+        opacity: 0;
+    }
+}
+
+button.btn-dark {
+    @include btn-base;
+}
+
+button.btn-white {
+    @include btn-base;
+    color: var(--dark-color);
+    backdrop-filter: var(--white-color);
+    border: 1px solid var(--dark-color);
+}
+
+
+#app {
+    background: var(--dark-color);
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+
+h2 {
+    font-size: 42px;
+}
+
+div.title {
+    font-size: x-large;
+    text-align: center;
+}
+
+div.error-message {
+    color: var(--danger-color);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+
+    input {
+        background: var(--dark-color);
+        border: none;
+        padding: 10px 15px;
+        width: 100%;
+        font-size: 16px;
+        outline: none;
+        color: var(--white-color);
+        position: relative;
+
+        & ~ div.validation-message {
+            margin-bottom: -20px;
+            color: var(--danger-color);
+            text-align: left;
+            font-size: 14px;
+        }
+    }
+
+    div.status-message {
+        transition: all .5s ease;
+        text-align: center;
+        height: 30px;
+
+        &.success {
+            color: var(--success-color);
+        }
+
+        &.error {
+            color: var(--danger-color);
+        }
+
+        &:disabled,
+        &[disabled]{
+            opacity: 0;
+        }
+    }
+
+    button {
+        @extend button.btn-dark;
+        width: 50%;
+        align-self: center;
+    }
+
+    img {
+        height: 44px;
+    }
+}

@@ -1,0 +1,45 @@
+﻿@inject ICardServiceClient CardService;
+
+<EditForm Model="@_input" FormName="Transfer" OnValidSubmit="OnTransfer">
+    <DataAnnotationsValidator />
+    <div class="title">Transfer</div>
+    <div>
+        <InputText @bind-Value="_input.To" placeholder="Pay to" />
+        <ValidationMessage For="() => _input.To" />
+    </div>
+    <div>
+        <InputNumber @bind-Value="_input.Amount" placeholder="Amount" />
+        <ValidationMessage For="() => _input.Amount" />
+    </div>
+    <div>
+        <InputText @bind-Value="_input.Reason" placeholder="Reason" />
+        <ValidationMessage For="() => _input.Reason" />
+    </div>
+    <button type="submit">Send</button>
+    <StatusMessage Message="@_statusMessage"/>
+</EditForm>
+
+@code {
+    private TransferRequest _input = new();
+    private string? _statusMessage = string.Empty;
+    private bool _isSubmitting;
+
+    private async Task OnTransfer()
+    {
+        _isSubmitting = true;
+        _statusMessage = string.Empty;
+        try
+        {
+            _input.To = _input.To.Replace(" ", "");
+            TransferResponse? response = await CardService.Transfer(_input);
+
+            if (response?.TransactionDTO is TransactionDTO transactionDTO)
+                _statusMessage = transactionDTO.IsSuccess ? "Withdraw successfuly completed" : transactionDTO.ErrorMessage;
+        }
+        catch (Exception ex)
+        {
+            _statusMessage = ex.Message;
+        }
+        _isSubmitting = false;
+    }
+}

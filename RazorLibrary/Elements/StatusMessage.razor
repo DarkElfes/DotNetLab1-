@@ -1,0 +1,13 @@
+﻿<div class="status-message @(Message.Contains("Error") ? "error" : "success")" disabled="@_isDisabled">@Message</div>
+
+@code {
+    [Parameter] public string Message { get; set; } = "Message";
+    private bool _isDisabled = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isDisabled = false;
+        await Task.Delay(2000);
+        _isDisabled = true;
+    }
+}

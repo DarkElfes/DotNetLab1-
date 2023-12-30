@@ -1,0 +1,23 @@
+.transaction-block{
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.transaction-block > div:nth-child(2){
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.transaction-block > div:last-child{
+    position: absolute;
+    color: var(--gray-color);
+    right: 10px;
+    top: 10px;
+    text-align: right;
+}
+
+
+.transaction-block.error{
+    background: var(--danger-color);
+}

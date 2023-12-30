@@ -1,0 +1,28 @@
+﻿@inject ICardServiceClient CardServices
+
+@if (_cardDTO is not null)
+{
+    foreach (TransactionDTO t in _cardDTO.TransactionDTOs.OrderByDescending(t => t.Id))
+    {
+        <TransactionBlock Transaction="@t" CardId="@_cardDTO.Id" @key="t.Id" />
+    }
+}
+else
+{
+    for (int i = 0; i < 6; i++)
+    {
+        <TransactionBlock Transaction="null" CardId="0" @key="i" />
+    }
+}
+
+@code {
+    private CardDTO? _cardDTO;
+
+    protected override void OnInitialized()
+        => CardServices.OnCardChanged += Update;
+
+    private void Update(CardDTO cardDTO){
+        _cardDTO = cardDTO;
+        StateHasChanged();
+    }
+}

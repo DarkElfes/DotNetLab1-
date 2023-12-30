@@ -1,0 +1,64 @@
+﻿@if (Transaction is not null)
+{
+    <div class="transaction-block  border @(Transaction.IsSuccess ? "border-success" : "border-danger")">
+
+        @switch (Transaction.Type)
+        {
+            case TransactionType.Transfer:
+                <AuthorizeView>
+                    <h5>@(_isSend ? Transaction.ToCardUserName : "From " + Transaction.CardUserName)</h5>
+                </AuthorizeView>
+                break;
+            case TransactionType.Deposit:
+                <h5>Deposit</h5>
+                break;
+            case TransactionType.Withdraw:
+                <h5>Withdraw</h5>
+                break;
+        }
+
+        @if (!Transaction.IsSuccess)
+        {
+            <div class="text-danger" style="font-size:small">@Transaction.ErrorMessage</div>
+        }
+
+        @if (_isSend)
+        {
+            <div class="text-danger">-@Transaction.Amount$</div>
+
+        }
+        else
+        {
+            <div class="text-success">+@Transaction.Amount$</div>
+        }
+
+        <div class="date-time">
+            <div>@Transaction.CreateTime.ToString("hh:mm:ss tt")</div>
+            <div>@Transaction.CreateTime.ToString("yyyy-MM-dd")</div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="transaction-block border">
+        <div class="bg-dark mb-3" style="height:20px"></div>
+        <div class="bg-dark mb-3" style="height:20px"></div>
+        <div class="bg-dark mb-3" style="height:20px"></div>
+    </div>
+}
+
+
+@code {
+    [Parameter] public TransactionDTO Transaction { get; set; } = null!;
+    [Parameter] public int CardId { get; set; }
+    private bool _isSend;
+
+    protected override void OnInitialized()
+    {
+        if (Transaction is not null)
+        {
+            _isSend = CardId == Transaction.CardId &&
+               (Transaction.Type == TransactionType.Transfer || Transaction.Type == TransactionType.Withdraw);
+        }
+    }
+}

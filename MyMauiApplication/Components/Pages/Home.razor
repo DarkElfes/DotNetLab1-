@@ -1,0 +1,29 @@
+﻿
+<style>
+    div.test {
+        background: white;
+        height: 100vh;
+    }
+</style>
+@inject NavigationManager Navigation;
+<div class="test">
+
+    <h1>Hello, world!</h1>
+
+    Welcome to your new app.
+    Auth =>
+    <AuthorizeView>
+        <NotAuthorized>
+            <button @onclick="GoToRegister">Register</button>
+        </NotAuthorized>
+        <Authorized>
+            Hi
+            @context.User.Identity?.Name
+        </Authorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    private void GoToRegister()
+      => Navigation.NavigateTo("/auth");
+}

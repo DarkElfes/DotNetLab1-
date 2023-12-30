@@ -1,0 +1,19 @@
+﻿<EditForm Model="@Input" FormName="Login" OnValidSubmit="OnLogin">
+    <DataAnnotationsValidator />
+    <div>
+        <InputText @bind-Value="Input.Email" placeholder="Email" />
+        <ValidationMessage For="() => Input.Email" />
+    </div>
+    <div>
+        <InputText @bind-Value="Input.Password" placeholder="Password" />
+        <ValidationMessage For="() => Input.Password" />
+    </div>
+    <button type="submit" disabled="@IsSubmitting">Login</button>
+
+</EditForm>
+
+@code {
+    [Parameter] public LoginRequest Input { get; set; } = null!;
+    [Parameter] public EventCallback OnLogin { get; set; }
+    [Parameter] public bool IsSubmitting { get; set; }
+}

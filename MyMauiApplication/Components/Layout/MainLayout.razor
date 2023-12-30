@@ -1,0 +1,13 @@
+﻿@inherits LayoutComponentBase
+@inject IVeilNavigationManager Navigation;
+@inject IJSRuntime JSRuntime;
+@using RazorLibrary.Elements.Veil;
+
+<div class="page">
+    <main>
+        <article class="content">
+            <Veil/>
+            @Body
+        </article>
+    </main>
+</div>

@@ -1,0 +1,36 @@
+﻿@inject IVeilNavigationManager Navigation;
+
+<div class="veil" disabled="@_isDisabled">
+    <h1>Dark Bank</h1>
+</div>
+
+
+@code {
+    private bool _isDisabled = true;
+
+    protected override void OnInitialized()
+    {
+        Navigation.OnPreNavigation += EnableVeil;
+        Navigation.OnAfterNavigation += DisableVeil;
+    }
+
+    private int EnableVeil()
+    {
+        _isDisabled = false;
+        StateHasChanged();
+        return 500;
+    }
+
+    private void DisableVeil()
+    {
+        _isDisabled = true;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        Navigation.OnPreNavigation -= EnableVeil;
+        Navigation.OnAfterNavigation -= DisableVeil;
+    }
+}
+

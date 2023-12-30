@@ -1,0 +1,37 @@
+﻿@inject ICardServiceClient CardService;
+
+<EditForm Model="@_input" FormName="Deposit" OnValidSubmit="OnDeposit">
+    <DataAnnotationsValidator />
+    <div class="title">Withdraw</div>
+    <div>
+        <InputNumber @bind-Value="_input.Amount" placeholder="Amount" />
+        <ValidationMessage For="() => _input.Amount" />
+    </div>
+    <button type="submit" disabled="@_isSubmitting">Withdraw</button>
+    <StatusMessage Message="@_statusMessage" />
+</EditForm>
+
+@code {
+    private OperationRequest _input = new();
+    private string _statusMessage = string.Empty;
+    private bool _isSubmitting;
+
+    private async Task OnDeposit()
+    {
+        _isSubmitting = true;
+        _statusMessage = string.Empty;
+        try
+        {
+            TransferResponse? response = await CardService.Withdraw(_input);
+            if (response?.TransactionDTO is TransactionDTO transactionDTO)
+                _statusMessage = transactionDTO.IsSuccess ? "Withdraw successfuly completed" : transactionDTO.ErrorMessage;
+
+        }
+        catch (Exception ex)
+        {
+            _statusMessage = ex.Message;
+        }
+        _isSubmitting = false;
+    }
+
+}

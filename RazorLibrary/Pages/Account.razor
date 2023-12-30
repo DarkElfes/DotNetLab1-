@@ -1,0 +1,58 @@
+﻿@using System.Net.Http
+@inject IAuthenticationService AuthService;
+@inject ICardServiceClient CardService;
+@inject IVeilNavigationManager Navigation;
+
+<AuthorizeView>
+    <div class="wrapper">
+        <div class="logo">Dark Bank</div>
+        <button class="btn-dark logout" @onclick="Logout">Logout</button>
+
+
+        <CardPanel />
+        <div class="information outer-wrapper">
+
+            <div class="title">Information</div>
+            <div class="information inner-wrapper">
+                <div>
+                    <span>Name:</span> <span>@context.User.Identity?.Name</span>
+                </div>
+                <div>
+                    <span>Email:</span> <span>@context.User.FindFirst(c => c.Type == ClaimTypes.Email)!.Value</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="history outer-wrapper">
+            <div class="title">Transaction history</div>
+            <TransactionsHistory />
+        </div>
+
+        @if (CardService.CardDTO is not null)
+        {
+            <TransferForm />
+            <DepositForm />
+            <WithdrawForm />
+        }
+    </div>
+</AuthorizeView>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await CardService.GetCardAsync();
+        }
+        catch
+        {
+            await Logout();
+        }
+    }
+
+    private async Task Logout()
+    {
+        await AuthService.LogoutAsync();
+        await Navigation.NavigateToAsync("/auth");
+    }
+}

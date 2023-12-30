@@ -1,0 +1,26 @@
+[
+  {
+    "outputFile": "Pages/Auth.razor.css",
+    "inputFile": "Pages/Auth.razor.scss"
+  },
+  {
+    "outputFile": "Elements/CardPanel/CardPanel.razor.css",
+    "inputFile": "Elements/CardPanel/CardPanel.razor.scss"
+  },
+  {
+    "outputFile": "Elements/Veil/Veil.razor.css",
+    "inputFile": "Elements/Veil/Veil.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Account.razor.css",
+    "inputFile": "Pages/Account.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Account.razor.css",
+    "inputFile": "Pages/Account.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Auth.razor.css",
+    "inputFile": "Pages/Auth.razor.scss"
+  }
+]
