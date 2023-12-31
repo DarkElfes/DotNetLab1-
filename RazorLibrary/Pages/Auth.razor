@@ -81,9 +81,9 @@
 
             _isSubmitting = false;
         }
-        catch
-        {
-            _errorMessage = "It's all fucked up. Hit me again.";
+        catch(Exception ex)
+        {   
+            _errorMessage = ex.Message;
             _isSubmitting = false;
         }
     }

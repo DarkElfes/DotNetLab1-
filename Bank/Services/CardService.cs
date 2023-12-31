@@ -27,7 +27,7 @@ public class CardService(IHttpContextAccessor httpContextAccessor,
     {
         CardDTO cardDTO = _mapper.Map<CardDTO>(card);
 
-        cardDTO.TransactionDTOs = ListFullMap(_transRepo.GetAll().Where(t => t.CardId == card.Id || t.ToCardId == card.Id).ToList());
+        cardDTO.TransactionDTOs = ListFullMap(_transRepo.GetAll().Where(t => t.CardId == card.Id || t.ToCardId == card.Id && t.IsSuccess).ToList());
 
         return cardDTO;
     }

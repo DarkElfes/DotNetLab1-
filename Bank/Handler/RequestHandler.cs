@@ -11,7 +11,6 @@ public class RequestHandler(RequestDelegate next)
 
     public async Task Invoke(HttpContext context)
     {
-        string controllerName = context.GetRouteValue("controller").ToString();
         if (context.Request.Headers.TryGetValue("Authorization", out StringValues authHeader))
         {
             JwtSecurityToken jwt = new(authHeader.ToString().Replace("Bearer ", ""));

@@ -2,6 +2,7 @@
 using Library.Models.DTOs.Response;
 using Bank.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace Bank.Controllers;
 

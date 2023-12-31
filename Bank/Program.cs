@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Library.Models;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,17 @@ builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IUserManager, UserManager>();
 
 builder.Services.AddHttpContextAccessor();
+/*
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+                      {
+                          policy.AllowAnyHeader();
+                          policy.WithOrigins("https://localhost:7209");
+                          policy.AllowAnyMethod();
+                          policy.AllowCredentials();
+                      });
+});*/
 
 builder.Services.AddAuthentication(options =>
 {
@@ -66,6 +78,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<RequestHandler>();
 app.UseHttpsRedirection();
+//app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
